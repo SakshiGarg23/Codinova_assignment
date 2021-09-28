@@ -1,0 +1,17 @@
+<div class="main-bg">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="column mt_10 mb_10" *ngFor="let item of productData">
+              <div class="tooltip">
+                <div class="card pointer" [ngStyle]="{'background-image': 'url(' + item.image + ')'}" (click)="selectProduct(item)">
+                <h3>{{item.name}}</h3>
+                </div>
+                <span class="tooltiptext">
+                  <p>Price:{{item.price}}</p>
+                  <p>Description:{{item.description}}</p>
+                </span>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>

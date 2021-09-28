@@ -1,0 +1,131 @@
+<div class="main-bg">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="scrolltable prod-table">
+                <table class="table table-borderless common-table">
+                  <caption style="display: none;">Table for Products</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Products</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor = "let item of productData;  let i=index;">
+                        <th scope="row"><i class="fa fa-times cross" aria-hidden="true" (click)="removeItem(i)"></i>
+                        </th>
+                        <td>{{item?.name}}</td>
+                        <td>{{item?.price}}</td>
+                        <td>
+                          <i class="fa fa-minus distance pointer" aria-hidden="true" (click)="decreaseQuantity(i)"></i>
+                          <span class="quant">{{item?.quantity}}</span>
+                          <i class="fa fa-plus distance pointer" aria-hidden="true" (click)="increaseQuantity(i)"></i>
+                        </td>
+                        <td>{{item?.amount}}</td>
+                      </tr>
+                      <tr *ngIf="productData.length == 0"> 
+                          <td colspan="5" style="text-align: center;">There are no products</td>
+                        </tr>
+                    </tbody>
+                  </table>
+              </div>
+              <div class="scrolltable">
+                <table class="table table-borderless common-table">
+                  <caption style="display: none;">Table for Products</caption>
+                    <tbody>
+                      <tr>
+                        <th scope="row">SubTotal</th>
+                        <td>{{subTotal}} EUR</td>
+                        <td>{{totalItem}} items</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Vat Tax</th>
+                        <td><input type="text" [(ngModel)]="vatValue"  [disabled]="productData.length == 0" (change)="calculateVat()"></td>
+                        <td>{{vat}} EUR</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Discount</th>
+                        <td><input type="text" [(ngModel)]="discountValue" [disabled]="productData.length == 0" (change)="calculateDiscount()"></td>
+                        <td>{{discount}} EUR</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Total</th>
+                        <td>{{total}} EUR</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+        </div>
+        <div class="row mb_10">
+          <div class="button-group">
+            <button type="button" class="btn cancel pointer" [disabled]="productData.length == 0" (click)="cancelSale()">CANCEL SALE</button>
+            <button type="button" class="btn process pointer" [disabled]="productData.length == 0" (click)="openModal('receipt')">PROCESS SALE</button>
+          </div>
+        </div>
+    </div>
+</div>
+<div id="receipt" class="see">
+  <div class="see-content">
+      <div class="see-header">
+          <h2>Receipt</h2>
+      </div>
+      <div class="see-body">
+          <h5 class="modal-title text-center mt-3 mb-1"></h5>
+          <div class="schedule-box">
+              <div class="mt-3 mb-1">
+                  <p style="color: #111111; text-align: center;font-size:16px;font-weight: 700;">Sale No:{{saleNo}}</p>
+                  <p style="color: #111111;font-weight: 600;">Date:{{ currentDate| date:'MM-dd-yyyy HH:mm:ss'}}</p>
+                  <div class="scrolltable receipt-table">
+                    <table class="table table-borderless common-table">
+                      <caption style="display: none;">Table for Products</caption>
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Products</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">SubTotal</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor = "let item of productData;  let i=index;">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{item?.name}}</td>
+                            <td>{{item?.quantity}}</td>
+                            <td>{{subTotal}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                  <div class="scrolltable">
+                    <table class="table table-borderless common-table">
+                      <caption style="display: none;">Table for price</caption>
+                        <tbody>
+                          <tr>
+                            <th scope="row"><span>Total Items</span><span class="float-right">{{totalItem}}</span></th>
+                            <td><span>Total</span><span class="float-right">{{total}} EUR</span></td>
+                          </tr>
+                          <tr>
+                            <th scope="row"></th>
+                            <td><span>Discount</span><span class="float-right">{{discountValue}} EUR</span></td>
+                          </tr>
+                          <tr>
+                            <th scope="row"></th>
+                            <td><span>Vat</span><span class="float-right">{{vatValue}} EUR</span></td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                  </div>
+                  <div class="text-center mb-3">
+                      <button class="btn white-btn" (click)="closemodal()">Close</button>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>

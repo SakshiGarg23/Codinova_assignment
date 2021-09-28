@@ -1,0 +1,10 @@
+.row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .left-side{
+     grid-column: span 6;
+  }
+  .right-side{
+     grid-column: span 6;
+  }
